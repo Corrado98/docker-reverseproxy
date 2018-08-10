@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "80:2222"
+    links:
+      - confluence:confluence
+      - phpmyadmin:phpmyadmin
+
+  confluence:
+    container_name: confluence
+    image: cptactionhank/atlassian-confluence
+    links:
+      - mysql:mysql
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+        MYSQL_USERNAME: "root"
+        MYSQL_ROOT_PASSWORD: "mypassword"
+        PMA_HOST: "mysql"
+        PMA_PORT: "3306"
+
+  mysql:
+    container_name: mysql
+    image: mysql:5
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "mypassword"
+      MYSQL_DATABASE: "syscodes"
+    restart: always
