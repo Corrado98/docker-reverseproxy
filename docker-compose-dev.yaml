@@ -5,7 +5,7 @@ services:
     container_name: nginx
     build: ./nginx
     ports:
-      - "80:2222"
+      - "80:80"
     links:
       - confluence:confluence
       - phpmyadmin:phpmyadmin
